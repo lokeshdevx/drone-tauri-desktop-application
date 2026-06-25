@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222 47% 5%;
+    --foreground: 210 40% 98%;
+    --card: 222 47% 8%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 10%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 0 84% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 55%;
+    --accent: 217 33% 20%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 217 33% 15%;
+    --input: 217 33% 13%;
+    --ring: 0 84% 55%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground antialiased; }
+}
+
+@layer components {
+  .glass {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .camera-placeholder {
+    @apply relative bg-black flex items-center justify-center overflow-hidden;
+    background: radial-gradient(ellipse at center, #0d1117 0%, #000 100%);
+  }
+
+  .scan-overlay {
+    @apply absolute inset-0 pointer-events-none overflow-hidden opacity-30;
+  }
+
+  .scan-overlay::before {
+    content: '';
+    @apply absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent;
+    animation: scan-line 3s linear infinite;
+  }
+
+  .detection-box {
+    @apply absolute border-2 border-red-500;
+    box-shadow: 0 0 8px rgba(239,68,68,0.6), inset 0 0 8px rgba(239,68,68,0.1);
+  }
+
+  .status-dot {
+    @apply w-2 h-2 rounded-full inline-block;
+  }
+
+  .status-dot.online { @apply bg-green-500; box-shadow: 0 0 6px #22c55e; }
+  .status-dot.offline { @apply bg-red-500; }
+  .status-dot.connecting { @apply bg-yellow-500 animate-pulse; }
+  .status-dot.error { @apply bg-red-600; box-shadow: 0 0 6px #dc2626; }
+  .status-dot.detecting { @apply bg-orange-500; box-shadow: 0 0 8px #f97316; animation: pulse-ring 1.5s infinite; }
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: hsl(var(--card)); }
+::-webkit-scrollbar-thumb { background: hsl(var(--muted)); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground)); }
